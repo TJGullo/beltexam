@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Create an item for a wishlist</title>
+  </head>
+  <body>
+    <h1>Create a new Wish List Item</h1>
+    {% for error in messages %}
+        <p>{{ error }}</p>
+    {% endfor %}
+    <form name='create_item' action="{% url 'wishlist:create' %}" method="post">
+        {% csrf_token %}
+        <label>Item/Product Name:</label>
+        <input type="text" name="item" placeholder="Black Belt">
+        <input type="submit" name="submit" value="Submit">
+      </form>
+      <a href="{% url 'users:logout' %}">Logout</a>
+      <a class="button" href="{% url 'wish_list:index' %}">Go to Wish Lists</a>
+  </body>
+</html>

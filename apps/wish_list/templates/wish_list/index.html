@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+    <title>Belt Exam Wish Lists</title>
+  </head>
+  <body>
+    <h1>Hello, {{ request.sessions.email }}</h1>
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Added By</th>
+        <th>Date Added</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        {% for item in wishes %}
+        <td>{{ Wishes.item }}</td>
+        <td>{{ Wishes.created_at }}</td>
+        <td>{{ Wishes.user }}</td>
+        {% if request.session.user_id == Wishes.user %}
+        <td><a href="{% url 'wishlist:create' %}">REMOVE FROM WISH LIST</a>
+          {% endif %}
+        {% endfor %}
+    <nav>
+      <a href="{% url 'wishlist:new' %}">Add a new item to your wishlist</a>
+      <a href="{% url 'users:logout' %}">Logout</a>
+    </nav>
+    <h1>Other users' wish lists</h1>
+
+  </body>
+</html>
