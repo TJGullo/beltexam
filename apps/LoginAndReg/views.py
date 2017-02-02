@@ -44,7 +44,6 @@ def login(request):
                 messages.error(request, error)
             return redirect('users:index')
         else:
-            request.session['email'] = email
             return redirect('users:success')
 
     return redirect('users:index')

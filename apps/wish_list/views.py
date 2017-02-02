@@ -22,7 +22,7 @@ def new(request):
 
 
 def create(request):
-    print "*"*50
+
     response = Wishes.objects.create_item(request.POST)
     print "5"*50
     if response[0] == False:

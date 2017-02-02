@@ -12,11 +12,15 @@ class WishesManager(models.Manager):
         print data
         errors = []
         item = data['item']
-        if Wishes.objects.filter(item=item):
+        if self.filter(item=item):
             errors.append('Item already exists. Please enter a different item')
 
         if len(item) < 3:
             errors.append('Item must be atleast 3 characters long')
+        else:
+            print data
+            # self.create(item=data['item'])
+
 
         if errors:
             print "*"*50
@@ -25,8 +29,8 @@ class WishesManager(models.Manager):
         else:
             print "1"*50
             try:
-                item = self.create(item=item)
                 print item
+                # item = Wishes.objects.create(item=item)
             except NameError:
                 pass
             return [True, item]
