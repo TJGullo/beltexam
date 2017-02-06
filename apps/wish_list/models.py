@@ -30,10 +30,12 @@ class WishesManager(models.Manager):
             print "1"*50
             try:
                 print item
-                # item = Wishes.objects.create(item=item)
+                our_user = User.objects.get(id=3)
+                print our_user.first_name
+                item = Wishes.objects.create(item=item, user=our_user)
             except NameError:
                 pass
-            return [True, item]
+        return [True, item]
 
 
 class Wishes(models.Model):

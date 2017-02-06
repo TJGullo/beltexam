@@ -7,23 +7,31 @@
     <title>Belt Exam Wish Lists</title>
   </head>
   <body>
-    <h1>Hello, {{ request.sessions.email }}</h1>
+    <h1>Hello, {{ request.session.first_name }}</h1>
+
+
     <table>
       <tr>
         <th>Item</th>
-        <th>Added By</th>
         <th>Date Added</th>
+        <th>Added by</th>
+        <th>ID</th>
         <th>Action</th>
       </tr>
-      <tr>
-        {% for item in wishes %}
-        <td>{{ Wishes.item }}</td>
-        <td>{{ Wishes.created_at }}</td>
-        <td>{{ Wishes.user }}</td>
-        {% if request.session.user_id == Wishes.user %}
-        <td><a href="{% url 'wishlist:create' %}">REMOVE FROM WISH LIST</a>
-          {% endif %}
+
+        {% for wish in items %}
+        <tr>
+          <td>{{ wish.item }}</td>
+          <td>{{ wish.created_at }}</td>
+          <td>{{ wish.user.first_name }}</td>
+          <!-- Not adding first name of the current user -->
+          <td>{{ wish.id }}</td>
+          {% if request.session.user_id == Wishes.user.id %}
+          <td><a href="{% url 'wishlist:destroy' wish.id %}">REMOVE FROM WISH LIST</a>
+            {% endif %}
+        </tr>
         {% endfor %}
+
     <nav>
       <a href="{% url 'wishlist:new' %}">Add a new item to your wishlist</a>
       <a href="{% url 'users:logout' %}">Logout</a>

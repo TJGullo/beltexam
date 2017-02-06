@@ -28,10 +28,11 @@ def register(request):
             print '9'*50
             print 'got to the "else"'
             print response[1]
-            # try:
-            #     request.session['first_name'] = response[1].first_name
-            # except MultiValueDictKeyError:
-            #     pass
+            try:
+                request.session['first_name'] = response[1].first_name
+                request.session['id'] = int(response[1].id)
+            except MultiValueDictKeyError:
+                print "could not save to session!!!!"
             return redirect('users:success')
     else:
         return redirect('users:index')

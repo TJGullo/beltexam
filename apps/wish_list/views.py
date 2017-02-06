@@ -8,9 +8,10 @@ from ..LoginAndReg.models import User
 def index(request):
     print request.session.keys()
     items = Wishes.objects.all()
-
+    users = User.objects.all()
     context = {
         'items': items,
+        'users': users,
     }
     return render(request, 'wish_list/index.html', context)
 
@@ -37,3 +38,7 @@ def create(request):
             return redirect('wishlist:index')
     else:
         return redirect('wishlist:index')
+
+def destroy(request, id):
+    wish = Wishes.objects.get(id=id).delete()
+    return redirect('wishlist:index')
