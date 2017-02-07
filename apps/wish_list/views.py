@@ -7,11 +7,12 @@ from ..LoginAndReg.models import User
 
 def index(request):
     print request.session.keys()
-    items = Wishes.objects.all()
-    users = User.objects.all()
+    our_items = Wishes.objects.filter(added_by__id=request.session['id'])
+    print our_items, "*"*50
+    other_items = Wishes.objects.exclude(added_by__id=request.session['id'])
     context = {
-        'items': items,
-        'users': users,
+        'our_items': our_items,
+        'other_items': other_items,
     }
     return render(request, 'wish_list/index.html', context)
 
@@ -23,8 +24,8 @@ def new(request):
 
 
 def create(request):
-
-    response = Wishes.objects.create_item(request.POST)
+    user_id = request.session['id']
+    response = Wishes.objects.create_item(request.POST, user_id)
     print "5"*50
     if response[0] == False:
         for error in response[1]:
@@ -40,5 +41,17 @@ def create(request):
         return redirect('wishlist:index')
 
 def destroy(request, id):
-    wish = Wishes.objects.get(id=id).delete()
+    wish = Wishes.objects.get(id=id)
+    wish.delete()
     return redirect('wishlist:index')
+
+def add(request, wish_id):
+    # adding item to own wish list
+    u_id = request.session['id']
+    print u_id, 'views user id'
+    Wishes.objects.add_item(wish_id, u_id)
+    return redirect('wishlist:index')
+
+def remove(request, wish_id):
+    # removing item from own wish list
+    pass

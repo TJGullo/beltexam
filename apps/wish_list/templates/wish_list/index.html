@@ -14,29 +14,56 @@
       <tr>
         <th>Item</th>
         <th>Date Added</th>
-        <th>Added by</th>
+        <th>Created by</th>
         <th>ID</th>
         <th>Action</th>
       </tr>
 
-        {% for wish in items %}
+        {% for wish in our_items %}
         <tr>
           <td>{{ wish.item }}</td>
           <td>{{ wish.created_at }}</td>
-          <td>{{ wish.user.first_name }}</td>
+          <td>{{ wish.created_by.first_name }}</td>
           <!-- Not adding first name of the current user -->
           <td>{{ wish.id }}</td>
-          {% if request.session.user_id == Wishes.user.id %}
-          <td><a href="{% url 'wishlist:destroy' wish.id %}">REMOVE FROM WISH LIST</a>
+          {% if request.session.id == wish.created_by.id %}
+          <td><a href="{% url 'wishlist:destroy' wish.id %}">DELETE</a>
+            {% else %}
+            <td><a href="{% url 'wishlist:remove' wish.id %}">REMOVE</a>
             {% endif %}
         </tr>
         {% endfor %}
+      </table>
+      <h1>Other wish lists</h1>
 
+
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Date Added</th>
+          <th>Created by</th>
+          <th>ID</th>
+          <th>Action</th>
+        </tr>
+
+          {% for wish in other_items %}
+          <tr>
+            <td>{{ wish.item }}</td>
+            <td>{{ wish.created_at }}</td>
+            <td>{{ wish.created_by.first_name }}</td>
+            <!-- Not adding first name of the current user -->
+            <td>{{ wish.id }}</td>
+
+            <td><a href="{% url 'wishlist:add' wish.id %}">ADD TO WISH LIST</a>
+
+          </tr>
+          {% endfor %}
+        </table>
     <nav>
       <a href="{% url 'wishlist:new' %}">Add a new item to your wishlist</a>
       <a href="{% url 'users:logout' %}">Logout</a>
     </nav>
-    <h1>Other users' wish lists</h1>
+
 
   </body>
 </html>

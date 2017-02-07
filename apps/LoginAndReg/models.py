@@ -49,24 +49,24 @@ class UserManager(models.Manager):
             return [False, errors]
         else:
             hashed = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt())
-            try:
-                user = self.create(first_name=first_name, last_name=last_name, email=email, password=hashed)
-            except NameError:
-                pass
+            user = self.create(first_name=first_name, last_name=last_name, email=email, password=hashed)
+            print user
             return [True, user]
 
     def validate_login(self, data):
         errors = []
         print 'Filtering for email'
         if User.objects.filter(email=data['email']):
-            hashed = User.objects.get(email=data['email']).password
+            user = User.objects.get(email=data['email'])
+            print user
+            hashed = user.password
             hashed = hashed.encode('utf-8')
             print hashed
             password = data['password']
             password = password.encode('utf-8')
             print password
             if bcrypt.hashpw(password, hashed) == hashed:
-                return (True, password)
+                return (True, user)
         else:
             print 'got to else statement on validate_login'
             errors.append('Bad Email and/or Password, Please try again')

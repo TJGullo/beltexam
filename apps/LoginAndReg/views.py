@@ -45,6 +45,9 @@ def login(request):
                 messages.error(request, error)
             return redirect('users:index')
         else:
+            request.session['first_name'] = response[1].first_name
+            request.session['id'] = int(response[1].id)
+            print request.session['id'], "This is the session ID"
             return redirect('users:success')
 
     return redirect('users:index')
