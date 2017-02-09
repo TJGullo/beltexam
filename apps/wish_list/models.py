@@ -5,7 +5,7 @@ from django.db import models
 # Create your models here.
 class WishesManager(models.Manager):
     def fetch_items(self):
-        items = self.all().order_by("-created_at")[:5]
+        items = self.all().order_by("-created_at")
         return items
 
     def create_item(self, data, user_id):
@@ -46,8 +46,14 @@ class WishesManager(models.Manager):
         wish.added_by.add(our_user)
         print wish.item
 
+    def remove_item(self, wish_id, user_id):
+        our_user = User.objects.get(id=user_id)
+        wish = Wishes.objects.get(id=wish_id)
+        wish.added_by.remove(our_user)
+        print wish.item
 
-
+    def show_item(self, wish_id):
+        pass
 
 class Wishes(models.Model):
     created_by = models.ForeignKey(User, related_name='created_item')

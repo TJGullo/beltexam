@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+    <title>Belt Exam Wish Lists</title>
+  </head>
+  <body>
+    {% if items %}
+    <h1>{{ wish.item }}</h1>
+
+    <p> Users who added this product/item under their wish list</p>
+
+
+      <h2>{{ wish.created_by.first_name }}<h2>
+    {% endif %}
+
+      <nav>
+        <a href="{% url 'wishlist:index' %}">Home</a>
+        <a href="{% url 'users:logout' %}">Logout</a>
+      </nav>
+
+  </body>
+</html>

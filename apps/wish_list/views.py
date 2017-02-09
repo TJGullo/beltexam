@@ -47,11 +47,20 @@ def destroy(request, id):
 
 def add(request, wish_id):
     # adding item to own wish list
-    u_id = request.session['id']
-    print u_id, 'views user id'
-    Wishes.objects.add_item(wish_id, u_id)
+    user_id = request.session['id']
+    print user_id, 'views user id'
+    Wishes.objects.add_item(wish_id, user_id)
     return redirect('wishlist:index')
 
 def remove(request, wish_id):
     # removing item from own wish list
-    pass
+    user_id = request.session['id']
+    Wishes.objects.remove_item(wish_id, user_id)
+    return redirect('wishlist:index')
+
+def show(request, wish_id):
+    context = {
+        'items': Wishes.objects.get(id=wish_id),
+    }
+    print context
+    return render(request, 'wish_list/show.html', context)

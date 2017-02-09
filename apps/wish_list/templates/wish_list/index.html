@@ -21,7 +21,7 @@
 
         {% for wish in our_items %}
         <tr>
-          <td>{{ wish.item }}</td>
+          <td><a href="{% url 'wishlist:show' wish.id %}">{{ wish.item }}</a></td>
           <td>{{ wish.created_at }}</td>
           <td>{{ wish.created_by.first_name }}</td>
           <!-- Not adding first name of the current user -->
@@ -48,7 +48,7 @@
 
           {% for wish in other_items %}
           <tr>
-            <td>{{ wish.item }}</td>
+            <td><a href="{% url 'wishlist:show' wish.id %}">{{ wish.item }}</a></td>
             <td>{{ wish.created_at }}</td>
             <td>{{ wish.created_by.first_name }}</td>
             <!-- Not adding first name of the current user -->
