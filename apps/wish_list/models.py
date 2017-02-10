@@ -53,7 +53,9 @@ class WishesManager(models.Manager):
         print wish.item
 
     def show_item(self, wish_id):
-        pass
+        wish = Wishes.objects.get(id=wish_id)
+        print wish
+        return wish
 
 class Wishes(models.Model):
     created_by = models.ForeignKey(User, related_name='created_item')

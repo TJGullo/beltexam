@@ -8,13 +8,15 @@
   </head>
   <body>
     {% if items %}
-    <h1>{{ wish.item }}</h1>
+      <h1>{{ items.item }}</h1>
 
-    <p> Users who added this product/item under their wish list</p>
-
-
-      <h2>{{ wish.created_by.first_name }}<h2>
+        <p> Users who added this product/item under their wish list</p>
     {% endif %}
+
+    {% for user in users %}
+      <h2>{{ user.first_name }}<h2>
+    {% endfor %}
+
 
       <nav>
         <a href="{% url 'wishlist:index' %}">Home</a>

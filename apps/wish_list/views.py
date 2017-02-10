@@ -59,8 +59,12 @@ def remove(request, wish_id):
     return redirect('wishlist:index')
 
 def show(request, wish_id):
+    wish = Wishes.objects.show_item(wish_id)
+    users = wish.added_by.all()
+    print users, "this was the users"
     context = {
-        'items': Wishes.objects.get(id=wish_id),
-    }
+        'items': wish,
+        'users': users,
+        }
     print context
     return render(request, 'wish_list/show.html', context)
